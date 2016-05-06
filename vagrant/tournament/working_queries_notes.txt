@@ -1,0 +1,9 @@
+working queries
+
+select players.id, players.name, count(match_outcomes.matchid) as matches from players left join match_outcomes on (players.id = match_outcomes.playerid) group by players.id order by matches desc;
+
+*********************
+select players.id, players.name, count(match_outcomes.matchid) as wins from players left join match_outcomes on (players.id = match_outcomes.playerid and match_outcomes.outcome = 'winner') group by players.id order by wins desc;
+*********************
+
+select player_wins.id, player_wins.name, wins, matches from played_matches, player_wins where player_wins.id = played_matches.id order by wins desc;

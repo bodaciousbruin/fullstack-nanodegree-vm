@@ -92,6 +92,17 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
+    # this query assumes that the following views have been established:
+    # create view played_matches as select players.id, players.name, count(match_outcomes.matchid) as matches from players left join match_outcomes on (players.id = match_outcomes.playerid) group by players.id;
+
+    # create view player_wins as select players.id, players.name, count(match_outcomes.matchid) as wins from players left join match_outcomes on (players.id = match_outcomes.playerid and match_outcomes.outcome = 'winner') group by players.id;
+    query = "select player_wins.id, player_wins.name, wins, matches from played_matches, player_wins where player_wins.id = played_matches.id order by wins desc;"
+    connection = connect()
+    cursor = connection.cursor()
+    cursor.execute(query)
+    standingsResult = cursor.fetchall()
+    # print "standingsResult = " + str(standingsResult)
+    return standingsResult
 
 
 def reportMatch(winner, loser):
