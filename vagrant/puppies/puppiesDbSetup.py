@@ -25,7 +25,7 @@ class Puppy(Base):
     dateOfBirth = Column(DateTime)
     gender = Column(String(6))
     weight = Column(String(10))
-    picture = Column(String(250))
+    picture = Column(String)
     shelter_id = Column(Integer, ForeignKey('shelter.id'))
     shelter = relationship(Shelter)
 
